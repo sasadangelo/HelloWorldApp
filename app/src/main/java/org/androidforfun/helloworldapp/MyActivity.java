@@ -1,80 +1,26 @@
 package org.androidforfun.helloworldapp;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Rect;
 import android.os.Bundle;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.Window;
 import android.view.WindowManager;
 
+import org.androidforfun.droids.view.LoadingScreen;
 import org.androidforfun.framework.FileIO;
+import org.androidforfun.framework.Gdx;
+import org.androidforfun.framework.Graphics;
+import org.androidforfun.framework.Screen;
+import org.androidforfun.framework.impl.AndroidFastRenderView;
 import org.androidforfun.framework.impl.AndroidFileIO;
-
-import java.io.IOException;
-import java.io.InputStream;
+import org.androidforfun.framework.impl.AndroidGraphics;
 
 public class MyActivity extends Activity {
     AndroidFastRenderView renderView;
-
-    public class AndroidFastRenderView extends SurfaceView implements Runnable {
-        Bitmap startscreenBitmap;
-        Rect dst = new Rect();
-        Thread renderThread = null;
-        SurfaceHolder holder;
-        volatile boolean running = false;
-
-        public AndroidFastRenderView(Context game, Bitmap framebuffer) {
-            super(game);
-            this.holder = getHolder();
-
-            InputStream inputStream = null;
-            try {
-                FileIO fileIO = new AndroidFileIO(getAssets());
-                inputStream = fileIO.readAsset("startscreen.png");
-                startscreenBitmap = BitmapFactory.decodeStream(inputStream);
-            } catch (IOException e) {
-            } finally {
-                if (inputStream != null) try { inputStream.close(); } catch (IOException e) {}
-            }
-        }
-
-        public void resume() {
-            running = true;
-            renderThread = new Thread(this);
-            renderThread.start();
-        }
-
-        public void run() {
-            Rect dstRect = new Rect();
-            while(running) {
-                if(!holder.getSurface().isValid())
-                    continue;
-
-                Canvas canvas = holder.lockCanvas();
-                canvas.getClipBounds(dstRect);
-                canvas.drawBitmap(startscreenBitmap, null, dstRect, null);
-                holder.unlockCanvasAndPost(canvas);
-            }
-        }
-
-        public void pause() {
-            running = false;
-            while(true) {
-                try {
-                    renderThread.join();
-                    break;
-                } catch (InterruptedException e) {
-                    // retry
-                }
-            }
-        }
-    }
+    Graphics graphics;
+    FileIO fileIO;
+    Screen screen;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -90,19 +36,58 @@ public class MyActivity extends Activity {
         Bitmap frameBuffer = Bitmap.createBitmap(frameBufferWidth,
                 frameBufferHeight, Bitmap.Config.RGB_565);
 
-        renderView = new AndroidFastRenderView(this, frameBuffer);
+        float scaleX = (float) frameBufferWidth
+                / getWindowManager().getDefaultDisplay().getWidth();
+        float scaleY = (float) frameBufferHeight
+                / getWindowManager().getDefaultDisplay().getHeight();
 
+        renderView = new AndroidFastRenderView(this, frameBuffer);
+        graphics = new AndroidGraphics(getAssets(), frameBuffer);
+        fileIO = new AndroidFileIO(getAssets());
+        screen = new LoadingScreen();
         setContentView(renderView);
+
+        Gdx.graphics = graphics;
+        Gdx.fileIO = fileIO;
+        Gdx.game = this;
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        screen.resume();
         renderView.resume();
     }
 
     public void onPause() {
         super.onPause();
         renderView.pause();
+        screen.pause();
+
+        if (isFinishing())
+            screen.dispose();
+    }
+
+    public FileIO getFileIO() {
+        return fileIO;
+    }
+
+    public Graphics getGraphics() {
+        return graphics;
+    }
+
+    public void setScreen(Screen screen) {
+        if (screen == null)
+            throw new IllegalArgumentException("Screen must not be null");
+
+        this.screen.pause();
+        this.screen.dispose();
+        screen.resume();
+        screen.update();
+        this.screen = screen;
+    }
+
+    public Screen getCurrentScreen() {
+        return screen;
     }
 }
