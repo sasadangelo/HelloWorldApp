@@ -1,24 +1,21 @@
-package org.androidforfun.helloworldapp;
+package org.androidforfun.framework.impl;
 
 import android.app.Activity;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 
-import org.androidforfun.droids.view.LoadingScreen;
 import org.androidforfun.framework.FileIO;
+import org.androidforfun.framework.Game;
 import org.androidforfun.framework.Gdx;
 import org.androidforfun.framework.Graphics;
 import org.androidforfun.framework.Input;
 import org.androidforfun.framework.Screen;
-import org.androidforfun.framework.impl.AndroidFastRenderView;
-import org.androidforfun.framework.impl.AndroidFileIO;
-import org.androidforfun.framework.impl.AndroidGraphics;
-import org.androidforfun.framework.impl.AndroidInput;
 
-public class MyActivity extends Activity {
+public abstract class AndroidGame extends Activity implements Game {
     AndroidFastRenderView renderView;
     Graphics graphics;
     FileIO fileIO;
@@ -37,8 +34,8 @@ public class MyActivity extends Activity {
         int frameBufferWidth = isLandscape ? 480 : 320;
         int frameBufferHeight = isLandscape ? 320 : 480;
         Bitmap frameBuffer = Bitmap.createBitmap(frameBufferWidth,
-                frameBufferHeight, Bitmap.Config.RGB_565);
-
+                frameBufferHeight, Config.RGB_565);
+        
         float scaleX = (float) frameBufferWidth
                 / getWindowManager().getDefaultDisplay().getWidth();
         float scaleY = (float) frameBufferHeight
@@ -48,13 +45,14 @@ public class MyActivity extends Activity {
         graphics = new AndroidGraphics(getAssets(), frameBuffer);
         fileIO = new AndroidFileIO(getAssets());
         input = new AndroidInput(this, renderView, scaleX, scaleY);
-        screen = new LoadingScreen();
-        setContentView(renderView);
 
         Gdx.graphics = graphics;
         Gdx.fileIO = fileIO;
-        Gdx.game = this;
         Gdx.input = input;
+        Gdx.game = this;
+
+        screen = getStartScreen();
+        setContentView(renderView);
     }
 
     @Override
@@ -64,6 +62,7 @@ public class MyActivity extends Activity {
         renderView.resume();
     }
 
+    @Override
     public void onPause() {
         super.onPause();
         renderView.pause();
@@ -73,14 +72,22 @@ public class MyActivity extends Activity {
             screen.dispose();
     }
 
+    @Override
     public FileIO getFileIO() {
         return fileIO;
     }
 
+    @Override
     public Graphics getGraphics() {
         return graphics;
     }
 
+    @Override
+    public Input getInput() {
+        return input;
+    }
+
+    @Override
     public void setScreen(Screen screen) {
         if (screen == null)
             throw new IllegalArgumentException("Screen must not be null");
@@ -91,7 +98,7 @@ public class MyActivity extends Activity {
         screen.update();
         this.screen = screen;
     }
-
+    
     public Screen getCurrentScreen() {
         return screen;
     }

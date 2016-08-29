@@ -6,16 +6,16 @@ import android.graphics.Rect;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import org.androidforfun.helloworldapp.MyActivity;
+import org.androidforfun.framework.Game;
 
 public class AndroidFastRenderView extends SurfaceView implements Runnable {
-    MyActivity game;
+    Game game;
     Bitmap framebuffer;
     Thread renderThread = null;
     SurfaceHolder holder;
     volatile boolean running = false;
     
-    public AndroidFastRenderView(MyActivity game, Bitmap framebuffer) {
+    public AndroidFastRenderView(AndroidGame game, Bitmap framebuffer) {
         super(game);
         this.game=game;
         this.framebuffer = framebuffer;

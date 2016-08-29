@@ -20,6 +20,19 @@ public class StartScreen implements Screen {
                 if(inBounds(event, 32, 374, 51, 51)) {
                     soundEnabled = !soundEnabled;
                 }
+                if(inBounds(event, 64, 220, 192, 42) ) {
+                    Gdx.game.setScreen(new GameScreen());
+                    return;
+                }
+                if(inBounds(event, 64, 220 + 42, 192, 42) ) {
+                    Gdx.game.setScreen(new HighscoreScreen());
+                    return;
+                }
+                if(inBounds(event, 64, 220 + 84, 192, 42) ) {
+                    android.os.Process.killProcess(android.os.Process.myPid());
+                    System.exit(1);
+                    return;
+                }
             }
         }
     }
@@ -34,6 +47,8 @@ public class StartScreen implements Screen {
     @Override
     public void draw() {
         Gdx.graphics.drawPixmap(Assets.startscreen, 0, 0);
+        Gdx.graphics.drawPixmap(Assets.logo, 32, 20);
+        Gdx.graphics.drawPixmap(Assets.mainmenu, 64, 220);
         if(soundEnabled)
             Gdx.graphics.drawPixmap(Assets.buttons, 32, 370, 0, 0, 51, 51);
         else

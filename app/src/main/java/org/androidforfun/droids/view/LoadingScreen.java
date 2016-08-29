@@ -1,9 +1,7 @@
 package org.androidforfun.droids.view;
 
-import android.util.Log;
-
 import org.androidforfun.framework.Gdx;
-import org.androidforfun.helloworldapp.MyActivity;
+import org.androidforfun.framework.Game;
 import org.androidforfun.framework.Graphics;
 import org.androidforfun.framework.Graphics.PixmapFormat;
 import org.androidforfun.framework.Screen;
@@ -12,8 +10,17 @@ import org.androidforfun.droids.model.Settings;
 public class LoadingScreen implements Screen {
     @Override
     public void update() {
+        Assets.logo = Gdx.graphics.newPixmap("logo.png", PixmapFormat.RGB565);
+
         Assets.startscreen = Gdx.graphics.newPixmap("startscreen.png", PixmapFormat.RGB565);
+        Assets.gamescreen = Gdx.graphics.newPixmap("gamescreen.png", PixmapFormat.RGB565);
+        Assets.highscoresscreen = Assets.startscreen;
+
+        Assets.mainmenu = Gdx.graphics.newPixmap("mainmenu.png", PixmapFormat.RGB565);
+
         Assets.buttons = Gdx.graphics.newPixmap("buttons.png", PixmapFormat.RGB565);
+        Assets.numbers = Gdx.graphics.newPixmap("numbers.png", PixmapFormat.ARGB4444);
+
         Settings.load(Gdx.fileIO);
         Gdx.game.setScreen(new StartScreen());
     }
