@@ -13,6 +13,7 @@ public class LoadingScreen implements Screen {
     @Override
     public void update() {
         Assets.startscreen = Gdx.graphics.newPixmap("startscreen.png", PixmapFormat.RGB565);
+        Assets.buttons = Gdx.graphics.newPixmap("buttons.png", PixmapFormat.RGB565);
         Settings.load(Gdx.fileIO);
         Gdx.game.setScreen(new StartScreen());
     }

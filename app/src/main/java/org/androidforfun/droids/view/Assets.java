@@ -8,4 +8,7 @@ import org.androidforfun.framework.Pixmap;
 public class Assets {
     // the screen used in DroidsWorld game
     public static Pixmap startscreen;
+
+    // buttons and numbers
+    public static Pixmap buttons;
 }

@@ -11,16 +11,19 @@ import org.androidforfun.droids.view.LoadingScreen;
 import org.androidforfun.framework.FileIO;
 import org.androidforfun.framework.Gdx;
 import org.androidforfun.framework.Graphics;
+import org.androidforfun.framework.Input;
 import org.androidforfun.framework.Screen;
 import org.androidforfun.framework.impl.AndroidFastRenderView;
 import org.androidforfun.framework.impl.AndroidFileIO;
 import org.androidforfun.framework.impl.AndroidGraphics;
+import org.androidforfun.framework.impl.AndroidInput;
 
 public class MyActivity extends Activity {
     AndroidFastRenderView renderView;
     Graphics graphics;
     FileIO fileIO;
     Screen screen;
+    Input input;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,12 +47,14 @@ public class MyActivity extends Activity {
         renderView = new AndroidFastRenderView(this, frameBuffer);
         graphics = new AndroidGraphics(getAssets(), frameBuffer);
         fileIO = new AndroidFileIO(getAssets());
+        input = new AndroidInput(this, renderView, scaleX, scaleY);
         screen = new LoadingScreen();
         setContentView(renderView);
 
         Gdx.graphics = graphics;
         Gdx.fileIO = fileIO;
         Gdx.game = this;
+        Gdx.input = input;
     }
 
     @Override
