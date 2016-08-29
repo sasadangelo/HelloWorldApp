@@ -1,10 +1,10 @@
 package org.androidforfun.framework;
 
 public interface Game {
-    public Input getInput();
-    public FileIO getFileIO();
-    public Graphics getGraphics();
-    public void setScreen(Screen screen);
-    public Screen getCurrentScreen();
-    public Screen getStartScreen();
+    Input getInput();
+    FileIO getFileIO();
+    Graphics getGraphics();
+    void setScreen(Screen screen);
+    Screen getCurrentScreen();
+    Screen getStartScreen();
 }

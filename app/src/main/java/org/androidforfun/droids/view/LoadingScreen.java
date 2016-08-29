@@ -1,8 +1,6 @@
 package org.androidforfun.droids.view;
 
 import org.androidforfun.framework.Gdx;
-import org.androidforfun.framework.Game;
-import org.androidforfun.framework.Graphics;
 import org.androidforfun.framework.Graphics.PixmapFormat;
 import org.androidforfun.framework.Screen;
 import org.androidforfun.droids.model.Settings;

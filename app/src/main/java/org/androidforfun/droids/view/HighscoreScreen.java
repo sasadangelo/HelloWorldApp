@@ -1,7 +1,6 @@
 package org.androidforfun.droids.view;
 
 import org.androidforfun.droids.model.Settings;
-import org.androidforfun.framework.Game;
 import org.androidforfun.framework.Gdx;
 import org.androidforfun.framework.Graphics;
 import org.androidforfun.framework.Input.TouchEvent;
@@ -57,8 +56,8 @@ public class HighscoreScreen implements Screen {
                 continue;
             }
     
-            int srcX = 0;
-            int srcWidth = 0;
+            int srcX;
+            int srcWidth;
             if (character == '.') {
                 srcX = 200;
                 srcWidth = 10;

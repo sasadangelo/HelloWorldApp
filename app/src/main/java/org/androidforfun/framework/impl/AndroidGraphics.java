@@ -44,6 +44,7 @@ public class AndroidGraphics implements Graphics {
                 try {
                     in.close();
                 } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         }
