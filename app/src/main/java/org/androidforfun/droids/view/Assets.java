@@ -15,9 +15,12 @@ public class Assets {
     public static Pixmap gamescreen;
     public static Pixmap startscreen;
     public static Pixmap highscoresscreen;
+    public static Pixmap gameoverscreen;
 
     // the menu used in DroidsWorld game
     public static Pixmap mainmenu;
+    public static Pixmap pausemenu;
+    public static Pixmap readymenu;
 
     // buttons and numbers
     public static Pixmap buttons;

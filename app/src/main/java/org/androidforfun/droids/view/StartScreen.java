@@ -1,14 +1,14 @@
 package org.androidforfun.droids.view;
 
-import org.androidforfun.framework.Gdx;
 import org.androidforfun.droids.model.Settings;
+import org.androidforfun.framework.Gdx;
+
 import org.androidforfun.framework.Input;
 import org.androidforfun.framework.Screen;
 
 import java.util.List;
 
 public class StartScreen implements Screen {
-    private boolean soundEnabled;
     @Override
     public void update() {
         List<Input.TouchEvent> touchEvents = Gdx.input.getTouchEvents();
