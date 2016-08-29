@@ -1,6 +1,7 @@
 package org.androidforfun.droids.view;
 
 import org.androidforfun.droids.model.Settings;
+import org.androidforfun.framework.Game;
 import org.androidforfun.framework.Gdx;
 import org.androidforfun.framework.Graphics;
 import org.androidforfun.framework.Input.TouchEvent;
@@ -27,6 +28,8 @@ public class HighscoreScreen implements Screen {
             TouchEvent event = touchEvents.get(i);
             if (event.type == TouchEvent.TOUCH_UP) {
                 if (event.x >= 32 &&  event.x < 82 && event.y >= 370 && event.y < 430) {
+                    if(Settings.soundEnabled)
+                        Assets.click.play(1);
                     Gdx.game.setScreen(new StartScreen());
                     return;
                 }

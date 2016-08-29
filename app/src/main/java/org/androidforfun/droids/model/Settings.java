@@ -9,12 +9,14 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 public class Settings {
+    public static boolean soundEnabled = true;
     public static int[] highscores = new int[] { 100, 80, 50, 30, 10 };
 
     public static void load(FileIO files) {
         BufferedReader in = null;
         try {
             in = new BufferedReader(new InputStreamReader(files.readFile(".droids")));
+            soundEnabled = Boolean.parseBoolean(in.readLine());
             for (int i = 0; i < 5; i++) {
                 highscores[i] = Integer.parseInt(in.readLine());
             }
@@ -34,6 +36,8 @@ public class Settings {
         BufferedWriter out = null;
         try {
             out = new BufferedWriter(new OutputStreamWriter(files.writeFile(".droids")));
+            out.write(Boolean.toString(soundEnabled));
+            out.write("\n");
             for (int i = 0; i < 5; i++) {
                 out.write(Integer.toString(highscores[i]));
                 out.write("\n");

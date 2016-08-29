@@ -1,6 +1,8 @@
 package org.androidforfun.droids.view;
 
+import org.androidforfun.framework.Music;
 import org.androidforfun.framework.Pixmap;
+import org.androidforfun.framework.Sound;
 
 /*
  This class contains the global references to all the assets used in DroidsWorld game.
@@ -20,4 +22,10 @@ public class Assets {
     // buttons and numbers
     public static Pixmap buttons;
     public static Pixmap numbers;
+
+    // sounds
+    public static Sound click;
+
+    // music
+    public static Music music;
 }

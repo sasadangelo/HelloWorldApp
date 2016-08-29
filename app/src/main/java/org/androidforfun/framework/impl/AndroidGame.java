@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 
+import org.androidforfun.framework.Audio;
 import org.androidforfun.framework.FileIO;
 import org.androidforfun.framework.Game;
 import org.androidforfun.framework.Gdx;
@@ -18,6 +19,7 @@ import org.androidforfun.framework.Screen;
 public abstract class AndroidGame extends Activity implements Game {
     AndroidFastRenderView renderView;
     Graphics graphics;
+    Audio audio;
     FileIO fileIO;
     Screen screen;
     Input input;
@@ -44,12 +46,14 @@ public abstract class AndroidGame extends Activity implements Game {
         renderView = new AndroidFastRenderView(this, frameBuffer);
         graphics = new AndroidGraphics(getAssets(), frameBuffer);
         fileIO = new AndroidFileIO(getAssets());
+        audio = new AndroidAudio(this);
         input = new AndroidInput(this, renderView, scaleX, scaleY);
 
         Gdx.graphics = graphics;
         Gdx.fileIO = fileIO;
         Gdx.input = input;
         Gdx.game = this;
+        Gdx.audio = audio;
 
         screen = getStartScreen();
         setContentView(renderView);
@@ -80,6 +84,11 @@ public abstract class AndroidGame extends Activity implements Game {
     @Override
     public Graphics getGraphics() {
         return graphics;
+    }
+
+    @Override
+    public Audio getAudio() {
+        return audio;
     }
 
     @Override

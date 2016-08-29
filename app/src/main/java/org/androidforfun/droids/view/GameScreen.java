@@ -1,11 +1,17 @@
 package org.androidforfun.droids.view;
 
+import org.androidforfun.droids.model.Settings;
 import org.androidforfun.framework.Gdx;
 import org.androidforfun.framework.Screen;
 
 public class GameScreen implements Screen {
     @Override
     public void update() {
+        if(Settings.soundEnabled)
+            if (!Assets.music.isPlaying()) {
+                Assets.music.setLooping(true);
+                Assets.music.play();
+            }
     }
 
     @Override
@@ -15,6 +21,9 @@ public class GameScreen implements Screen {
 
     @Override
     public void pause() {
+        if(Settings.soundEnabled)
+            if (Assets.music.isPlaying())
+                Assets.music.pause();
     }
 
    @Override

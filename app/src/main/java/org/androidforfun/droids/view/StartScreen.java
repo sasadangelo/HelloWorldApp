@@ -18,18 +18,26 @@ public class StartScreen implements Screen {
             Input.TouchEvent event = touchEvents.get(i);
             if(event.type == Input.TouchEvent.TOUCH_UP) {
                 if(inBounds(event, 32, 374, 51, 51)) {
-                    soundEnabled = !soundEnabled;
+                    Settings.soundEnabled = !Settings.soundEnabled;
+                    if(Settings.soundEnabled)
+                        Assets.click.play(1);
                 }
                 if(inBounds(event, 64, 220, 192, 42) ) {
                     Gdx.game.setScreen(new GameScreen());
+                    if (Settings.soundEnabled)
+                        Assets.click.play(1);
                     return;
                 }
                 if(inBounds(event, 64, 220 + 42, 192, 42) ) {
                     Gdx.game.setScreen(new HighscoreScreen());
+                    if(Settings.soundEnabled)
+                        Assets.click.play(1);
                     return;
                 }
                 if(inBounds(event, 64, 220 + 84, 192, 42) ) {
                     android.os.Process.killProcess(android.os.Process.myPid());
+                    if(Settings.soundEnabled)
+                        Assets.click.play(1);
                     System.exit(1);
                     return;
                 }
@@ -49,7 +57,7 @@ public class StartScreen implements Screen {
         Gdx.graphics.drawPixmap(Assets.startscreen, 0, 0);
         Gdx.graphics.drawPixmap(Assets.logo, 32, 20);
         Gdx.graphics.drawPixmap(Assets.mainmenu, 64, 220);
-        if(soundEnabled)
+        if(Settings.soundEnabled)
             Gdx.graphics.drawPixmap(Assets.buttons, 32, 370, 0, 0, 51, 51);
         else
             Gdx.graphics.drawPixmap(Assets.buttons, 32, 370, 50, 0, 51, 51);
