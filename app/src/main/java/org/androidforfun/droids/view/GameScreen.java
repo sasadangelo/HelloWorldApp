@@ -4,7 +4,6 @@ import org.androidforfun.framework.Gdx;
 import org.androidforfun.framework.Screen;
 
 public class GameScreen implements Screen {
-    @Override
     public void update() {
     }
 
