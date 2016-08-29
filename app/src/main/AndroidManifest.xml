@@ -3,6 +3,8 @@
     package="org.androidforfun.droids"
     android:versionCode="1"
     android:versionName="1.0">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <application android:label="Droids">
         <activity android:name=".view.DroidsGame"
             android:label="Droids"
